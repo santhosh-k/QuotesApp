@@ -1,8 +1,17 @@
 package net.santhoshk.quotesapp;
 
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,23 +22,54 @@ import java.util.Map;
  * Created by sandy on 1/4/17.
  */
 public class GridViewAdapter extends BaseAdapter {
+
+    Context mContext;
+    LayoutInflater inflater;
+    JSONArray response;
+    GridViewAdapter(Context context, JSONArray r){
+        mContext = context;
+        inflater = (LayoutInflater) mContext
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        response = r;
+    }
+
+
     @Override
     public int getCount() {
-        return 0;
+        return response.length();
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return i;
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
+        View finalView = null;
+        if (view == null) {
+            finalView = inflater.inflate(R.layout.grid_view_layout, null);
+        } else {
+            finalView = view;
+        }
+        try {
+            String title = ((String) ((JSONObject) (response.get(i))).get("title"));
+            int id = mContext.getResources().getIdentifier(title.toLowerCase(), "drawable", mContext.getPackageName());
+            if(id==0){
+                id = mContext.getResources().getIdentifier("cute", "drawable", mContext.getPackageName());
+            }
+            ImageView imageView = (ImageView) finalView.findViewById(R.id.tileImage);
+            TextView textView = (TextView) finalView.findViewById(R.id.tileText);
+            imageView.setImageResource(id);
+            textView.setText(title);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return finalView;
     }
 }

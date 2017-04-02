@@ -1,25 +1,24 @@
 package net.santhoshk.quotesapp;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonArrayRequest;
+
+import org.json.JSONArray;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,55 +26,35 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         Toast.makeText(this,"Testing Main Activity",Toast.LENGTH_SHORT).show();
-        GridView gridView = (GridView) findViewById(R.id.quotesCategoryGrid);
-        gridView.setAdapter(new BaseAdapter() {
-            LayoutInflater inflater = (LayoutInflater) getBaseContext()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            @Override
-            public int getCount() {
-                return new DataClass().getGridViewData().size();
-            }
+        final GridView gridView = (GridView) findViewById(R.id.quotesCategoryGrid);
+        RequestQueue mRequestQueue;
 
-            @Override
-            public Object getItem(int i) {
-                return null;
-            }
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024 * 10); // 1MB cap
 
-            @Override
-            public long getItemId(int i) {
-                return 0;
-            }
+        Network network = new BasicNetwork(new HurlStack());
 
-            @Override
-            public View getView(int i, View view, ViewGroup viewGroup) {
-                View finalView;
-                if(view==null){
-                    finalView = new View(getBaseContext());
-                    finalView = inflater.inflate(R.layout.grid_view_layout,null);
+        mRequestQueue = new RequestQueue(cache, network);
 
-                } else {
-                    finalView = (View) view;
-                }
+        mRequestQueue.start();
 
-                int id = getBaseContext().getResources().getIdentifier("tiger", "drawable",getBaseContext().getPackageName());
-                ImageView imageView = (ImageView) finalView.findViewById(R.id.tileImage);
-                TextView textView = (TextView) finalView.findViewById(R.id.tileText);
-                imageView.setImageResource(id);
-                textView.setText("Tiger");
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-               // finalView.setLayoutParams(new AbsListView.LayoutParams(400,400));
-                return finalView;
-            }
+        String url = "http://tr-santhoshk.rhcloud.com/getAllTopics";
 
-        });
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getBaseContext(),new DataClass().getGridViewData().get(i).get("topic"),Toast.LENGTH_LONG).show();
-            }
-        });
+        JsonArrayRequest jsObjRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Response",response.toString());
+                        gridView.setAdapter(new GridViewAdapter(MainActivity.this,response));
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        mRequestQueue.add(jsObjRequest);
+
     }
 }

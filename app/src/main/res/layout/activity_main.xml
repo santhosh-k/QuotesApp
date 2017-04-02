@@ -13,9 +13,12 @@
             android:id="@+id/quotesCategoryGrid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:columnWidth="100dp"
-            android:numColumns="auto_fit"
-            android:stretchMode="spacingWidth"
             android:gravity="center"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:horizontalSpacing="5dp"
+            android:verticalSpacing="5dp"
             ></GridView>
 </RelativeLayout>
