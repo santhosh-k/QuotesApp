@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,14 +60,20 @@ public class GridViewAdapter extends BaseAdapter {
             finalView = view;
         }
         try {
-            String title = ((String) ((JSONObject) (response.get(i))).get("title"));
+            String title = ((String) ((JSONObject) (response.get(i))).get("fullTitle"));
+            String thumbUrl = ((String) ((JSONObject) (response.get(i))).get("fullImg"));
             int id = mContext.getResources().getIdentifier(title.toLowerCase(), "drawable", mContext.getPackageName());
             if(id==0){
                 id = mContext.getResources().getIdentifier("cute", "drawable", mContext.getPackageName());
             }
             ImageView imageView = (ImageView) finalView.findViewById(R.id.tileImage);
             TextView textView = (TextView) finalView.findViewById(R.id.tileText);
-            imageView.setImageResource(id);
+            if(thumbUrl.isEmpty()){
+                imageView.setImageResource(id);
+            } else {
+                Picasso.with(finalView.getContext()).load(thumbUrl).into(imageView);
+            }
+            //imageView.setImageResource(id);
             textView.setText(title);
         } catch (JSONException e) {
             e.printStackTrace();
