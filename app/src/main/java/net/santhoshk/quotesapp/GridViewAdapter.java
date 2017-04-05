@@ -73,7 +73,6 @@ public class GridViewAdapter extends BaseAdapter {
             } else {
                 Picasso.with(finalView.getContext()).load(thumbUrl).into(imageView);
             }
-            //imageView.setImageResource(id);
             textView.setText(title);
         } catch (JSONException e) {
             e.printStackTrace();
