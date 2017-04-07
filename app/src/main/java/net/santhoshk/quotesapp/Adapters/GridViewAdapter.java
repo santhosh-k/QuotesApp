@@ -1,4 +1,4 @@
-package net.santhoshk.quotesapp;
+package net.santhoshk.quotesapp.Adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import net.santhoshk.quotesapp.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +30,7 @@ public class GridViewAdapter extends BaseAdapter {
     Context mContext;
     LayoutInflater inflater;
     JSONArray response;
-    GridViewAdapter(Context context, JSONArray r){
+    public GridViewAdapter(Context context, JSONArray r){
         mContext = context;
         inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

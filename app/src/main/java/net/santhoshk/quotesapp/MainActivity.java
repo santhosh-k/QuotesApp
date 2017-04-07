@@ -1,13 +1,18 @@
 package net.santhoshk.quotesapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import android.view.View;
+import android.view.ViewManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Cache;
@@ -21,6 +26,10 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonArrayRequest;
 
+import net.santhoshk.quotesapp.Adapters.GridViewAdapter;
+import net.santhoshk.quotesapp.Activities.SelectedTopicActivity;
+import net.santhoshk.quotesapp.Models.HeaderGridView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,15 +41,22 @@ public class MainActivity extends AppCompatActivity {
         final JSONArray[] data = {new JSONArray()};
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.mainActivityToolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("QuotesApp");
         Toast.makeText(this,"Testing Main Activity",Toast.LENGTH_SHORT).show();
-        final GridView gridView = (GridView) findViewById(R.id.quotesCategoryGrid);
+        ImageView imageView = (ImageView) findViewById(R.id.cateView);
+        final HeaderGridView gridView = (HeaderGridView) findViewById(R.id.quotesCategoryGrid);
+        ((ViewManager)imageView.getParent()).removeView(imageView);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
-                  // Toast.makeText(view.getContext(),((JSONObject)(data[0].get(i))).get("thumbUrl").toString(),Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(view.getContext(), SelectedTopicActivity.class);
-                    intent.putExtra("url",((JSONObject)(data[0].get(i))).get("fullImg").toString());
+                    intent.putExtra("fullTitle",((JSONObject)(data[0].get(i))).get("fullTitle").toString());
+                    intent.putExtra("quotesAvailabe",((JSONObject)(data[0].get(i))).get("quotesAvailabe").toString());
+                    intent.putExtra("title",((JSONObject)(data[0].get(i))).get("title").toString());
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -65,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         Log.d("Response",response.toString());
                         data[0] = response;
+                        ImageView imageView = (ImageView) findViewById(R.id.cateView);
+                        gridView.addHeaderView(imageView,null,false);
                         gridView.setAdapter(new GridViewAdapter(MainActivity.this,response));
                     }
 

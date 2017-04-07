@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="color_primary">#2196F3</color>
-    <color name="color_primary_dark">#1976D2</color>
+    <color name="color_primary_dark">#1976d2</color>
     <color name="color_primary_light">#BBDEFB</color>
     <color name="color_accent">#FF5722</color>
     <color name="color_primary_text">#212121</color>
@@ -14,4 +14,5 @@
     <color name="image_border_start">#40990000</color>
     <color name="image_border_end">#FF660000</color>
     <color name="image_border_center">#FFFF3333</color>
+    <color name="theme2Primary">#000000</color>
 </resources>
