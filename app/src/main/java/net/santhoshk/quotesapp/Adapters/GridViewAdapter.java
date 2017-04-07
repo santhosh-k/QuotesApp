@@ -57,7 +57,7 @@ public class GridViewAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         View finalView = null;
         if (view == null) {
-            finalView = inflater.inflate(R.layout.grid_view_layout, null);
+            finalView = inflater.inflate(R.layout.grid_view_layout_main_activity, null);
         } else {
             finalView = view;
         }
