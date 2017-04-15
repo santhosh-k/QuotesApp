@@ -1,6 +1,7 @@
 package net.santhoshk.quotesapp.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
+import net.santhoshk.quotesapp.Models.RoundedCornersTransformation;
 import net.santhoshk.quotesapp.R;
 
 import org.json.JSONArray;

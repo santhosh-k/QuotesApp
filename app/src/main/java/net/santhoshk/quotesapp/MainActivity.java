@@ -46,19 +46,18 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("QuotesApp");
-        actionBar.setCustomView(R.layout.search_layout);
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
-                | ActionBar.DISPLAY_SHOW_HOME);
+        actionBar.setSubtitle("Subs");
+/*        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
+                | ActionBar.DISPLAY_SHOW_HOME);*/
         Toast.makeText(this,"Testing Main Activity",Toast.LENGTH_SHORT).show();
         ImageView imageView = (ImageView) findViewById(R.id.cateView);
         final HeaderGridView gridView = (HeaderGridView) findViewById(R.id.quotesCategoryGrid);
         ((ViewManager)imageView.getParent()).removeView(imageView);
-        gridView.addHeaderView(imageView,null,false);
+        //gridView.addHeaderView(imageView,null,false);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
-                    i = i-3;
                     Intent intent = new Intent(view.getContext(), SelectedTopicActivity.class);
                     intent.putExtra("fullTitle",((JSONObject)(data[0].get(i))).get("fullTitle").toString());
                     intent.putExtra("quotesAvailabe",((JSONObject)(data[0].get(i))).get("quotesAvailabe").toString());

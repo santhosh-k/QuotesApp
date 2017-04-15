@@ -11,6 +11,7 @@
     <color name="color_secondary_text">#757575</color>
     <color name="color_icons">#FFFFFF</color>
     <color name="color_divider">#BDBDBD</color>
+    <color name="bg">#f2f4f9</color>
     <color name="image_border_start">#40990000</color>
     <color name="image_border_end">#FF660000</color>
     <color name="image_border_center">#FFFF3333</color>

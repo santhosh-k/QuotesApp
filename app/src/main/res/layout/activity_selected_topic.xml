@@ -7,37 +7,8 @@
     android:orientation="vertical"
     tools:context="net.santhoshk.quotesapp.Activities.SelectedTopicActivity">
 
-    <RelativeLayout
-        android:layout_marginTop="10dp"
-        android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <GridView
-            android:id="@+id/specificTopicGrid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:numColumns="2"
-            android:horizontalSpacing="2dp"
-            android:verticalSpacing="2dp"
-            android:gravity="center"
-            android:stretchMode="columnWidth"
-            ></GridView>
-        <ProgressBar
-            android:id="@+id/loadingProgressBarLarge"
-            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:indeterminateTint="@color/color_primary_dark"
-            android:visibility="visible" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/cute"
-            android:visibility="invisible" />
-    </RelativeLayout>
-
+    <fragment android:name="net.santhoshk.quotesapp.Fragments.PictureViewerFragment"
+        android:id="@+id/details_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
